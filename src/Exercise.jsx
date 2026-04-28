@@ -1,8 +1,29 @@
-import React, { useEffect, useState } from "react";
-import UserCard from "./UserCard";
-import { users, getUsers } from "./Services";
+//import React, { useEffect, useState } from "react";
+//import UserCard from "./UserCard";
+import React from "react";
+import { posts } from "./postsData";
+import PostCard from "./PostCard"; 
 
-function Exercise() {
+
+ function Exercise() {
+  return (
+    <div className="min-h-screen bg-gray-100 p-2"> 
+      <h1 className="text-2xl font-bold text-center mt-6 mb-10 text-red-600">
+        Post Cards
+      </h1>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full max-w-[98%] px-2 mx-auto">
+        {posts.map((post) => (
+          <PostCard key={post.id} {...post} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Exercise
+
+/*function Exercise() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -31,6 +52,4 @@ function Exercise() {
       </div>
     </>
   );
-}
-
-export default Exercise
+}*/

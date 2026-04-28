@@ -34,5 +34,23 @@ export const users = [
     .catch((error)=> {
       console.error(error);
       throw error;
+    });  
+};
+
+export const getPosts = () => {
+  return fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((posts) => 
+      // Kita ambil 3 post saja agar tidak terlalu memenuhi layar
+      posts.map((post) => ({
+        id: post.id,
+        userId: post.userId,
+        title: post.title,
+        body: post.body,
+      }))
+    )
+    .catch((error) => {
+      console.error(error);
+      throw error;
     });
 };

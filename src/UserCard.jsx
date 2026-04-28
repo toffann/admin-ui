@@ -7,7 +7,7 @@ function UserCard(props) {
   console.log(Object.entries(rest));
 
     return (
-    <div className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow">
+    <div className="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow hover:bg-special-red">
       <h2 className="text-xl font-semibold text-gray-800 mb-2">{name}</h2>
       <p className="text-gray-600">
         <span className="font-medium">Email:</span> {email}
@@ -25,7 +25,7 @@ function UserCard(props) {
       ))}
 
       <button 
-      className={`${clicked ? "bg-special-green" : "bg-gray-01"} text-white p-2 rounded-md`}
+      className={`${clicked ? "bg-special-red2" : "bg-gray-01"} text-white p-2 rounded-md`}
       onClick={() => setClicked(true)}
       >        
         {clicked ? "Tombol sudah diklik" : "Silakan Klik"}
