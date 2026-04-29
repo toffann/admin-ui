@@ -7,12 +7,12 @@ import PostCard from "./PostCard";
 
  function Exercise() {
   return (
-    <div className="min-h-screen bg-gray-100 p-2"> 
-      <h1 className="text-2xl font-bold text-center mt-6 mb-10 text-red-600">
+    <div className="min-h-screen bg-gray-100 p-6"> 
+      <h1 className="text-3xl font-bold text-center mb-6 text-red-700">
         Post Cards
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 w-full max-w-[98%] px-2 mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full max-w-[90%] px-2 mx-auto">
         {posts.map((post) => (
           <PostCard key={post.id} {...post} />
         ))}
