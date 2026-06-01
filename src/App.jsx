@@ -3,6 +3,7 @@ import SignInPage from "./pages/SignIn";
 import SignUpPage from "./pages/SignUp";
 import ErrorPage from "./pages/error";
 import DashboardPage from "./pages/dashboard";
+import BalancePage from "./pages/balance";
 import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 
 function App() {
@@ -19,6 +20,10 @@ function App() {
     {
       path: "/register",
       element: <SignUpPage />,
+    },
+    {
+      path: "/balance",
+      element: <BalancePage />,
     },
   ]);
 
