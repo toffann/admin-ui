@@ -9,7 +9,7 @@ function MainLayout(props) {
     <>
 	    <div className="flex min-h-screen">
             <aside 
-                className="bg-defaultBlack w-28 text-special-bg2
+                className="bg-defaultBlack w-28 sm:w-64 text-special-bg2
             flex flex-col justify-between px-7 py-12">
              <div>
 			   <div className="mb-10">
