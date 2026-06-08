@@ -77,7 +77,7 @@ function MainLayout(props) {
                     <span>May 19, 2023</span>
                   </div> 
                 </div>
-                <div className="flex" items-center>
+                <div className="flex items-center">
                   <div className="me-10"><NotificationsIcon className="text-gray-01 scale"/></div> 
                   <Input backgroundColor="bg-white" border="border-white" /> 
                 </div>
