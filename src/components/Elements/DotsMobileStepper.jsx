@@ -8,7 +8,7 @@ import { ThemeContext } from "../../context/themeContext";
 
 export default function DotsMobileStepper(props) {
   const { data } = props;
-const { theme: themeMode } = React.useContext(ThemeContext);
+  const { theme: themeMode } = React.useContext(ThemeContext);
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
