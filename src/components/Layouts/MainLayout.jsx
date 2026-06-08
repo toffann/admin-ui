@@ -23,7 +23,7 @@ function MainLayout(props) {
     <>
 	    <div className="flex min-h-screen">
             <aside 
-                className="bg-defaultBlack w-28 sm:w-64widh text-special-bg2
+                className="bg-defaultBlack w-28 sm:w-64 text-special-bg2
             flex flex-col justify-between px-7 py-12">
              <div>
 			   <div className="mb-10">
@@ -70,7 +70,7 @@ function MainLayout(props) {
             </aside>
             <div className="bg-special-mainBg flex-1 flex flex-col"> 
                 <header className="border border-b bordergray-05 px-6 py-7 flex justify-between items-center">
-                  <div className="flex" items-center>
+                  <div className="flex items-center">
                     <div className="font-bold text-2xl me-6">Username</div> 
                   <div className="text-gray-03 flex">
                     <Icon.ChevronRight size={20} />
