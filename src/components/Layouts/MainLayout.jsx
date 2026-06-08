@@ -18,7 +18,7 @@ function MainLayout(props) {
   { name: "theme-brown", bgcolor: "bg-[#8B4513]", color: "#8B4513" },
 ];
 
-const [theme, setTheme] = useState(ThemeContext);
+const {theme, setTheme} = useContext(ThemeContext);
 
   const menu = [
     { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
