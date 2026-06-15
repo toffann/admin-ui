@@ -5,7 +5,8 @@ import CompositionExample from "../Elements/CompositionExample";
 
 function CardGoal(props) {
   const { data } = props;
-  const chartValue = (data.presentAmount / data.targetAmount) * 100;
+
+  const chartValue = (data.present_amount / data.target_amount) * 100;
 
   return (
     <>
@@ -32,7 +33,7 @@ function CardGoal(props) {
 	                <div className="ms-2">
 	                  <div>Target Achieved</div>
 	                  <div className="font-bold text-xl text-black">
-	                    ${data.presentAmount}
+	                    ${data.present_amount }
 	                  </div>
 	                </div>
 	              </div>
@@ -41,7 +42,7 @@ function CardGoal(props) {
 	                <div className="ms-2">
 	                  <div>This Month Target</div>
 	                  <div className="font-bold text-xl text-black">
-	                    ${data.targetAmount}
+	                    ${data.target_amount}
 	                  </div>
 	                </div>
 	              </div>
