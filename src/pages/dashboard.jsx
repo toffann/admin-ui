@@ -9,7 +9,7 @@ import CardExpenseBreakdown from '../components/Fragments/CardExpenseBreakdown'
 import { transactions, bills, expensesBreakdowns, balances, goals, expensesStatistics, } from "../data";
 import { goalService } from '../services/dataService'
 import { AuthContext } from '../context/authContext'
-
+import AppSnackbar from '../components/Elements/AppSnackbar';
 
 function dashboard() {
 	const [goals, setGoals] = useState({});
