@@ -3,12 +3,16 @@ import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Icon from "../Elements/Icon";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom"; // Tambah useNavigate untuk redirect
 import { ThemeContext } from "../../context/themeContext";
 import { AuthContext } from "../../context/authContext";
+// IMPORT COMPONENTS UNTUK SOAL 5
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function MainLayout(props) {
   const { children } = props;
+  const navigate = useNavigate();
 
   const themes = [
     { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
@@ -31,16 +35,30 @@ function MainLayout(props) {
   ];
 
   const { user, logout } = useContext(AuthContext);
+  
+  // STATE UNTUK SOAL 5 (Mengatur visibilitas backdrop)
+  const [openLoading, setOpenLoading] = useState(false);
 
   const handleLogout = async () => {
+    // 1. Tampilkan backdrop loading segera setelah diklik
+    setOpenLoading(true);
+
     try {
-      await logoutService();
+      // 2. Berikan delay simulasi proses backend selama 1.5 detik agar animasi loading terlihat jelas
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Jika ada service logout ke endpoint backend, bisa diletakkan di sini
+      // await logoutService(); 
+      
       logout(); 
+      setOpenLoading(false);
+      navigate("/login"); // Alihkan user ke halaman login setelah selesai
     } catch (err) {
       console.error(err);
       if (err.status === 401) {
         logout();
       }
+      setOpenLoading(false); // Amankan backdrop agar tertutup jika proses gagal
     }
   }; 
   
@@ -87,7 +105,8 @@ function MainLayout(props) {
                 ))}
               </div>
             </div>
-            {/* PERBAIKAN: Mengubah oneClick menjadi onClick bawaan DOM React */}
+            
+            {/* Navigasi Tombol Logout */}
             <div onClick={handleLogout} className="cursor-pointer">
               <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
                 <div className="mx-auto sm:mx-0 text-primary">
@@ -100,7 +119,6 @@ function MainLayout(props) {
             <div className="flex justify-between items-center">
               <div>Avatar</div>
               <div className="hidden sm:block">
-                {/* PERBAIKAN LINE 102: Mencegah crash pembacaan properti dari data null */}
                 <div>{user?.name || "Toffan"}</div>
                 <div>View Profile</div>
               </div>
@@ -114,7 +132,6 @@ function MainLayout(props) {
         <div className="bg-special-mainBg flex-1 flex flex-col"> 
           <header className="border border-b bordergray-05 px-6 py-7 flex justify-between items-center">
             <div className="flex items-center">
-              {/* PERBAIKAN LINE 111: Menggunakan optional chaining agar header aman */}
               <div className="font-bold text-2xl me-6">{user?.name || "Toffan"}</div> 
               <div className="text-gray-03 flex">
                 <Icon.ChevronRight size={20} />
@@ -131,6 +148,23 @@ function MainLayout(props) {
           <main className="flex-1 px-6 py-4">{children}</main>
         </div>
       </div>
+
+      {/* COMPONENT BACKDROP & PROGRESS BAR (SOAL 5) */}
+      <Backdrop
+        sx={(theme) => ({ 
+          color: '#fff', 
+          zIndex: theme.zIndex.drawer + 1,
+          backgroundColor: 'rgba(0, 0, 0, 0.7)' // Memberikan efek latar belakang gelap redup
+        })}
+        open={openLoading}
+      >
+        <div className="flex flex-col items-center gap-3">
+          <CircularProgress color="inherit" size={55} />
+          <span className="text-sm font-medium tracking-wide text-white">
+            Logging out, please wait...
+          </span>
+        </div>
+      </Backdrop>
     </>
   );
 }
