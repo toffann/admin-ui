@@ -4,6 +4,7 @@ import SignUpPage from "./pages/SignUp";
 import ErrorPage from "./pages/error";
 import DashboardPage from "./pages/dashboard";
 import BalancePage from "./pages/balance";
+import ExpensePage from "./pages/expense";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { Children, useContext } from "react";
 import { AuthContext } from "./context/authContext";
@@ -52,6 +53,10 @@ function App() {
           <BalancePage />
         </RequireAuth>
       ),
+    },
+    {
+      path: "/expense",
+      element: <ExpensePage />, // <--- GANTI DARI <Expense /> MENJADI <ExpensePage />
     },
     {
       path: "/dashboard",

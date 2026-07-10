@@ -12,8 +12,9 @@ import { AuthContext } from '../context/authContext'
 import AppSnackbar from '../components/Elements/AppSnackbar';
 
 function dashboard() {
-	const [goals, setGoals] = useState({});
-  const { logout } = useContext(AuthContext);
+  const [goals, setGoals] = useState({});
+  // HANYA MENAMBAHKAN INI: Mengambil fungsi logout dari AuthContext bawaan dosen agar catch block tidak error
+  const { logout } = useContext(AuthContext); 
 
   const fetchGoals = async () => {
     try {
@@ -27,11 +28,7 @@ function dashboard() {
     }
   };
 
-  useEffect(() => {
-    fetchGoals();
-  }, []);
-  
-  console.log(goals);
+  // KODE DIBERSIHKAN DARI DUPLIKAT: Cukup satu useEffect untuk memanggil data saat pertama kali render
   useEffect(() => {
     fetchGoals();
   }, []);
@@ -40,7 +37,7 @@ function dashboard() {
 
   return (
     <>
-    			<MainLayout>
+      <MainLayout>
         <div className="grid sm:grid-cols-12 sm:grid-rows-3 gap-6">
           <div className="sm:col-span-4">
            <CardBalance data={balances} />
@@ -51,7 +48,7 @@ function dashboard() {
           <div className="sm:col-span-4">
             <CardUpcomingBill data={bills} />
           </div>
-          	<div className="sm:col-span-4 sm:row-span-2">
+            <div className="sm:col-span-4 sm:row-span-2">
             <CardRecentTransaction data={transactions} />
           </div>
           <div className="sm:col-span-8">
@@ -66,4 +63,4 @@ function dashboard() {
   )
 }
 
-export default dashboard
+export default dashboard;

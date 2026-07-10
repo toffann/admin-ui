@@ -7,19 +7,18 @@ import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/themeContext";
 import { AuthContext } from "../../context/authContext";
 
-
 function MainLayout(props) {
   const { children } = props;
 
   const themes = [
-  { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
-  { name: "theme-blue", bgcolor: "bg-[#1E90FF]", color: "#1E90FF" },
-  { name: "theme-purple", bgcolor: "bg-[#6A5ACD]", color: "#6A5ACD" },
-  { name: "theme-pink", bgcolor: "bg-[#DB7093]", color: "#DB7093" },
-  { name: "theme-brown", bgcolor: "bg-[#8B4513]", color: "#8B4513" },
-];
+    { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
+    { name: "theme-blue", bgcolor: "bg-[#1E90FF]", color: "#1E90FF" },
+    { name: "theme-purple", bgcolor: "bg-[#6A5ACD]", color: "#6A5ACD" },
+    { name: "theme-pink", bgcolor: "bg-[#DB7093]", color: "#DB7093" },
+    { name: "theme-brown", bgcolor: "bg-[#8B4513]", color: "#8B4513" },
+  ];
 
-const {theme, setTheme} = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(ThemeContext);
 
   const menu = [
     { id: 1, name: "Overview", icon: <Icon.Overview />, link: "/" },
@@ -33,7 +32,7 @@ const {theme, setTheme} = useContext(ThemeContext);
 
   const { user, logout } = useContext(AuthContext);
 
- 	  const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       await logoutService();
       logout(); 
@@ -47,15 +46,16 @@ const {theme, setTheme} = useContext(ThemeContext);
   
   return (
     <>
-	    <div className={`flex min-h-screen ${theme.name}`}>
-            <aside 
-                className="bg-defaultBlack w-28 sm:w-64 text-special-bg2
-            flex flex-col justify-between px-7 py-12">
-             <div>
-			   <div className="mb-10">
-          <Logo variant="secondary" />
-         </div>
-			   	<nav>
+      <div className={`flex min-h-screen ${theme.name}`}>
+        <aside 
+          className="bg-defaultBlack w-28 sm:w-64 text-special-bg2
+          flex flex-col justify-between px-7 py-12"
+        >
+          <div>
+            <div className="mb-10">
+              <Logo variant="secondary" />
+            </div>
+            <nav>
               {menu.map((item) => (
                 <NavLink
                   key={item.id}
@@ -73,59 +73,64 @@ const {theme, setTheme} = useContext(ThemeContext);
                 </NavLink>
               ))}
             </nav>
-		     </div>
-		     <div>
-			   					<div>
-            Themes
-            <div className="flex flex-col sm:flex-row gap-2 items-center">
-              {themes.map((t) => (
-                <div
-                  key={t.name}
-                  className={`${t.bgcolor} w-6 h-6 rounded-md cursor-pointer mb-2`}
-                  onClick={() => setTheme(t)}
-                ></div>
-              ))}
-            </div>
           </div>
-              <div oneClick={handleLogout} className="cursor-pointer">
-                  <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
-                    <div className="mx-auto sm:mx-0 text-primary">
-                      <Icon.Logout />
-                    </div>
-                  <div className="ms-3 hidden sm:block">logout</div>
-                   </div>
+          <div>
+            <div>
+              Themes
+              <div className="flex flex-col sm:flex-row gap-2 items-center">
+                {themes.map((t) => (
+                  <div
+                    key={t.name}
+                    className={`${t.bgcolor} w-6 h-6 rounded-md cursor-pointer mb-2`}
+                    onClick={() => setTheme(t)}
+                  ></div>
+                ))}
               </div>
-               <div className="border my-10 border-b-special-bg"></div>
-			        <div className="flex justify-between items-center">
+            </div>
+            {/* PERBAIKAN: Mengubah oneClick menjadi onClick bawaan DOM React */}
+            <div onClick={handleLogout} className="cursor-pointer">
+              <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
+                <div className="mx-auto sm:mx-0 text-primary">
+                  <Icon.Logout />
+                </div>
+                <div className="ms-3 hidden sm:block">logout</div>
+              </div>
+            </div>
+            <div className="border my-10 border-b-special-bg"></div>
+            <div className="flex justify-between items-center">
               <div>Avatar</div>
               <div className="hidden sm:block">
-                <div>{user.name}</div>
+                {/* PERBAIKAN LINE 102: Mencegah crash pembacaan properti dari data null */}
+                <div>{user?.name || "Toffan"}</div>
                 <div>View Profile</div>
               </div>
               <div className="hidden sm:block">
                 <Icon.Detail size={15} />
               </div>
             </div>
-		  </div>
-            </aside>
-            <div className="bg-special-mainBg flex-1 flex flex-col"> 
-                <header className="border border-b bordergray-05 px-6 py-7 flex justify-between items-center">
-                  <div className="flex items-center">
-                    <div className="font-bold text-2xl me-6">{user.name}</div> 
-                  <div className="text-gray-03 flex">
-                    <Icon.ChevronRight size={20} />
-                    <span>May 19, 2023</span>
-                  </div> 
-                </div>
-                <div className="flex items-center">
-                  <div className="me-10">
-                    <NotificationsIcon className="text-primary scale"/></div> 
-                  <Input backgroundColor="bg-white" border="border-white" /> 
-                </div>
-                </header>
-			    <main className="flex-1 px-6 py-4">{children}</main>
+          </div>
+        </aside>
+        
+        <div className="bg-special-mainBg flex-1 flex flex-col"> 
+          <header className="border border-b bordergray-05 px-6 py-7 flex justify-between items-center">
+            <div className="flex items-center">
+              {/* PERBAIKAN LINE 111: Menggunakan optional chaining agar header aman */}
+              <div className="font-bold text-2xl me-6">{user?.name || "Toffan"}</div> 
+              <div className="text-gray-03 flex">
+                <Icon.ChevronRight size={20} />
+                <span>May 19, 2023</span>
+              </div> 
             </div>
+            <div className="flex items-center">
+              <div className="me-10">
+                <NotificationsIcon className="text-primary scale"/>
+              </div> 
+              <Input backgroundColor="bg-white" border="border-white" /> 
+            </div>
+          </header>
+          <main className="flex-1 px-6 py-4">{children}</main>
         </div>
+      </div>
     </>
   );
 }
