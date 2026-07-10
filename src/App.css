@@ -6,6 +6,8 @@ html {
 
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
     --font-body: "Inter", sans-serif;
     --font-poppins: "Montserrat", sans-serif;
@@ -26,6 +28,14 @@ html {
     --color-special-red: #e73d1c;
     --color-special-red2: #b83016;
     
+}
+
+html.dark {
+  --color-special-mainBg: #18181b; /* zinc-900 (Warna background utama) */
+  --color-defaultBlack: #09090b;   /* zinc-950 (Warna sidebar hitam pekat) */
+  --color-gray-06: #27272a;        /* zinc-800 (Warna background Card) */
+  --color-gray-05: #27272a;        /* zinc-800 (Warna border Card) */
+  --color-secondary: #e4e4e7;      /* zinc-200 (Warna teks deskripsi) */
 }
 
 .theme-green {

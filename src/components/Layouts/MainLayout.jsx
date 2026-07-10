@@ -3,16 +3,19 @@ import Logo from "../Elements/Logo";
 import Input from "../Elements/Input";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Icon from "../Elements/Icon";
-import { NavLink, useNavigate } from "react-router-dom"; // Tambah useNavigate untuk redirect
+import { NavLink, useNavigate } from "react-router-dom"; 
 import { ThemeContext } from "../../context/themeContext";
 import { AuthContext } from "../../context/authContext";
-// IMPORT COMPONENTS UNTUK SOAL 5
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { DarkModeContext } from "../../context/darkModeContext";
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 function MainLayout(props) {
   const { children } = props;
   const navigate = useNavigate();
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const themes = [
     { name: "theme-green", bgcolor: "bg-[#299D91]", color: "#299D91" },
@@ -36,38 +39,30 @@ function MainLayout(props) {
 
   const { user, logout } = useContext(AuthContext);
   
-  // STATE UNTUK SOAL 5 (Mengatur visibilitas backdrop)
   const [openLoading, setOpenLoading] = useState(false);
 
   const handleLogout = async () => {
-    // 1. Tampilkan backdrop loading segera setelah diklik
     setOpenLoading(true);
 
     try {
-      // 2. Berikan delay simulasi proses backend selama 1.5 detik agar animasi loading terlihat jelas
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Jika ada service logout ke endpoint backend, bisa diletakkan di sini
-      // await logoutService(); 
       
       logout(); 
       setOpenLoading(false);
-      navigate("/login"); // Alihkan user ke halaman login setelah selesai
+      navigate("/login"); 
     } catch (err) {
       console.error(err);
       if (err.status === 401) {
         logout();
       }
-      setOpenLoading(false); // Amankan backdrop agar tertutup jika proses gagal
+      setOpenLoading(false); 
     }
   }; 
   
   return (
     <>
-      <div className={`flex min-h-screen ${theme.name}`}>
-        <aside 
-          className="bg-defaultBlack w-28 sm:w-64 text-special-bg2
-          flex flex-col justify-between px-7 py-12"
+      <div className={`flex min-h-screen transition-colors duration-300 ${theme.name} bg-special-mainBg text-black dark:bg-zinc-900 dark:text-white`}>        
+        <aside className={`w-28 sm:w-64 text-special-bg2 flex flex-col justify-between px-7 py-12 transition-colors duration-300 ${isDarkMode ? "bg-black" : "bg-defaultBlack"}`}
         >
           <div>
             <div className="mb-10">
@@ -95,19 +90,30 @@ function MainLayout(props) {
           <div>
             <div>
               Themes
-              <div className="flex flex-col sm:flex-row gap-2 items-center">
+              <div className="flex flex-col sm:flex-row gap-2 items-center mt-1">
                 {themes.map((t) => (
                   <div
                     key={t.name}
-                    className={`${t.bgcolor} w-6 h-6 rounded-md cursor-pointer mb-2`}
+                    className={`${t.bgcolor} w-6 h-6 rounded-md cursor-pointer`}
                     onClick={() => setTheme(t)}
                   ></div>
                 ))}
+                
+                <div
+                  onClick={toggleDarkMode}
+                  className="w-6 h-6 rounded-md cursor-pointer bg-special-bg3 flex items-center justify-center hover:scale-110 border border-zinc-700 transition-all"
+                  title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  {isDarkMode ? (
+                    <LightModeIcon sx={{ fontSize: 14, color: '#F1C40F' }} />
+                  ) : (
+                    <DarkModeIcon sx={{ fontSize: 14, color: '#A0A0A0' }} />
+                  )}
+                </div>
               </div>
             </div>
             
-            {/* Navigasi Tombol Logout */}
-            <div onClick={handleLogout} className="cursor-pointer">
+            <div onClick={handleLogout} className="cursor-pointer mt-4">
               <div className="flex bg-special-bg3 text-white px-4 py-3 rounded-md">
                 <div className="mx-auto sm:mx-0 text-primary">
                   <Icon.Logout />
@@ -129,8 +135,8 @@ function MainLayout(props) {
           </div>
         </aside>
         
-        <div className="bg-special-mainBg flex-1 flex flex-col"> 
-          <header className="border border-b bordergray-05 px-6 py-7 flex justify-between items-center">
+        <div className="flex-1 flex flex-col"> 
+          <header className={`border-b px-6 py-7 flex justify-between items-center transition-colors duration-300 ${isDarkMode ? "border-zinc-800 bg-zinc-900" : "border-gray-05 bg-white"}`}>
             <div className="flex items-center">
               <div className="font-bold text-2xl me-6">{user?.name || "Toffan"}</div> 
               <div className="text-gray-03 flex">
@@ -142,19 +148,18 @@ function MainLayout(props) {
               <div className="me-10">
                 <NotificationsIcon className="text-primary scale"/>
               </div> 
-              <Input backgroundColor="bg-white" border="border-white" /> 
+              <Input backgroundColor={isDarkMode ? "bg-zinc-800" : "bg-white"} border={isDarkMode ? "border-zinc-700" : "border-white"} /> 
             </div>
           </header>
           <main className="flex-1 px-6 py-4">{children}</main>
         </div>
       </div>
 
-      {/* COMPONENT BACKDROP & PROGRESS BAR (SOAL 5) */}
       <Backdrop
         sx={(theme) => ({ 
           color: '#fff', 
           zIndex: theme.zIndex.drawer + 1,
-          backgroundColor: 'rgba(0, 0, 0, 0.7)' // Memberikan efek latar belakang gelap redup
+          backgroundColor: 'rgba(0, 0, 0, 0.7)' 
         })}
         open={openLoading}
       >

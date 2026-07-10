@@ -8,6 +8,7 @@ import ExpensePage from "./pages/expense";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { Children, useContext } from "react";
 import { AuthContext } from "./context/authContext";
+import { DarkModeContextProvider } from "./context/darkModeContext";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -56,7 +57,7 @@ function App() {
     },
     {
       path: "/expense",
-      element: <ExpensePage />, // <--- GANTI DARI <Expense /> MENJADI <ExpensePage />
+      element: <ExpensePage />, 
     },
     {
       path: "/dashboard",
@@ -66,7 +67,9 @@ function App() {
   
   return (
     <>
+    <DarkModeContextProvider>
       <RouterProvider router={myRouter} />
+    </DarkModeContextProvider>
     </>
   );
 }

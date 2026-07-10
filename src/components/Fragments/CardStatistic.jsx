@@ -6,7 +6,7 @@ function CardStatistic(props) {
 
   // Membuat visualisasi diagram batang dinamis berdasarkan data expensesStatistics
   const statisticContent = (
-    <div className="h-full min-h-[180px] flex flex-col justify-between">
+    <div className="h-full min-h-45 flex flex-col justify-between">
       {/* Bagian Atas: Keterangan Warna Bar */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-xs text-gray-03 flex items-center gap-4 ms-auto">
