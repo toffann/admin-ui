@@ -2,77 +2,130 @@ import React from 'react';
 import Button from "../Elements/Button";
 import LabeledInput from '../Elements/LabeledInput';
 import { Link } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-function FormSignUp() {
+// Skema validasi disamakan formatnya dengan SignInSchema
+const SignUpSchema = Yup.object().shape({
+  name: Yup.string().required("Nama wajib diisi"),
+  email: Yup.string().email("Email tidak valid").required("Email wajib diisi"),
+  password: Yup.string().required("Password wajib diisi"),
+});
+
+function FormSignUp({ onSubmit }) {
   return (
     <>
       {/* form start */}
       <div className="mt-16">
-        <form action="">
-          {/* Input Nama Lengkap */}
-          <div className="mb-6">
-            <LabeledInput 
-              label="Name"
-              id="name"
-              type="text"
-              placeholder="Tanzir Rahman"
-              name="name"
-            />
-          </div>
+        <Formik
+          initialValues={{
+            name: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={SignUpSchema}
+          onSubmit={async (values, { setSubmitting }) => {
+            try {
+              await onSubmit(values.name, values.email, values.password);
+            } finally {
+              setSubmitting(false);
+            }
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              {/* NAMA */}
+              <div className="mb-6">
+                <Field name="name">
+                  {({ field }) => (
+                    <LabeledInput
+                      {...field}
+                      id="name"
+                      type="text"
+                      label="Name"
+                      placeholder="Tanzir Rahman"
+                    />
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="name"
+                  component="p"
+                  className="text-red-500 text-xs mt-1"
+                />
+              </div>
 
-          {/* Input Email */}
-          <div className="mb-6">
-            <LabeledInput 
-              label="Email Address"
-              id="email"
-              type="email"
-              placeholder="hello@example.com"
-              name="email"
-            />
-          </div>
+              {/* EMAIL */}
+              <div className="mb-6">
+                <Field name="email">
+                  {({ field }) => (
+                    <LabeledInput
+                      {...field}
+                      id="email"
+                      type="email"
+                      label="Email Address"
+                      placeholder="hello@example.com"
+                    />
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="email"
+                  component="p"
+                  className="text-red-500 text-xs mt-1"
+                />  
+              </div>
 
-          {/* Input Password */}
-          <div className="mb-6">
-            <LabeledInput 
-              label="Password"
-              id="password"
-              type="password"
-              placeholder="**************"
-              name="password"
-            />
-          </div>
+              {/* PASSWORD */}
+              <div className="mb-6">
+                <Field name="password">
+                  {({ field }) => (
+                    <LabeledInput
+                      {...field}
+                      id="password"
+                      type="password"
+                      label="Password"
+                      placeholder="**************"
+                    />
+                  )}
+                </Field> 
+                <ErrorMessage
+                  name="password"
+                  component="p"
+                  className="text-red-500 text-xs mt-1"
+                /> 
+              </div>
 
-          {/* Teks Terms of Service */}
-          <div className="mb-4 text-xs text-gray-03 text-left">
-            By continuing, you agree to our{' '}
-            <a href="#" className="text-primary underline">terms of service</a>.
-          </div>
-
-          {/* Tombol Sign Up */}
-          <Button type="submit">Sign up</Button>
-        </form>
+              {/* Teks Terms of Service */}
+              <div className="mb-4 text-xs text-gray-03 text-left">
+                By continuing, you agree to our{' '}
+                <a href="#" className="text-primary underline">terms of service</a>.
+              </div>
+              
+              <Button type="submit">{isSubmitting ? "Loading..." : "Register"}</Button>
+            </Form>
+          )}
+        </Formik>
       </div>
       {/* form end */}
 
-      {/* teks separator start */}
+      {/* teks start */}
       <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
         <div className="border border-gray-05 w-full"></div>
         <div className="px-2 bg-special-mainBg absolute"> or sign up with</div>
       </div>
-      {/* teks separator end */}
+      {/* teks end */}
 
       {/* sign up with google start */}
       <Button type="button" variant="secondary">
         <span className="flex items-center justify-center">
-           <svg
-              className="h-6 w-6 mr-2"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnXlink="http://www.w3.org/1999/xlink"
-              width="800px"
-              height="800px"
-              viewBox="-0.5 0 48 48"
-              version="1.1"
-            >
+          <svg
+            className="h-6 w-6 mr-2"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnXlink="http://www.w3.org/1999/xlink"
+            width="800px"
+            height="800px"
+            viewBox="-0.5 0 48 48"
+            version="1.1"
+          >
             <path
               d="M9.82727273,24 C9.82727273,22.4757333 10.0804318,21.0144 10.5322727,19.6437333 L2.62345455,13.6042667 C1.08206818,16.7338667 0.213636364,20.2602667 0.213636364,24 C0.213636364,27.7365333 1.081,31.2608 2.62025,34.3882667 L10.5247955,28.3370667 C10.0772273,26.9728 9.82727273,25.5168 9.82727273,24"
               fill="#FBBC05"
@@ -98,8 +151,8 @@ function FormSignUp() {
       {/* link start */}
       <div className="flex justify-center mt-6 text-sm text-gray-01">
         Already have an account?{' '}
-        <Link to="/login" className="text-primary font-bold">
-        Sign in here
+        <Link to="/login" className="text-primary font-bold ms-1">
+          Sign in here
         </Link>
       </div>
       {/* link end */}

@@ -53,6 +53,10 @@ function App() {
         </RequireAuth>
       ),
     },
+    {
+      path: "/dashboard",
+      element: <DashboardPage />, 
+    },
   ]);
   
   return (

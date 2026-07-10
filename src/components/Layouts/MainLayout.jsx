@@ -31,7 +31,7 @@ const {theme, setTheme} = useContext(ThemeContext);
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
 
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
  	  const handleLogout = async () => {
     try {

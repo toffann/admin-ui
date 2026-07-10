@@ -13,6 +13,7 @@ import AppSnackbar from '../components/Elements/AppSnackbar';
 
 function dashboard() {
 	const [goals, setGoals] = useState({});
+  const { logout } = useContext(AuthContext);
 
   const fetchGoals = async () => {
     try {

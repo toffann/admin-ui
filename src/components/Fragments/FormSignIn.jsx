@@ -35,7 +35,7 @@ function FormSignIn({onSubmit}) {
         >
           {({ isSubmitting }) => (
             <Form>
-              							{/* EMAIL */}
+                            {/* EMAIL */}
               <div className="mb-6">
                 <Field name="email">
                   {({ field }) => (
@@ -90,8 +90,8 @@ function FormSignIn({onSubmit}) {
                 </Field>
               </div>
               
-              {/* BUTTON */}
-              <Button>{isSubmitting ? "Loading..." : "Login"}</Button>
+              {/* UBAH DI SINI: Ditambahkan type="submit" */}
+              <Button type="submit">{isSubmitting ? "Loading..." : "Login"}</Button>
             </Form>
           )}
         </Formik>
@@ -136,16 +136,16 @@ function FormSignIn({onSubmit}) {
             Continue with Google
           </span>
         </Button>
-                {/* sign in with google end */}
-                {/* link start */}
-                <div className="flex justify-center mt-8">
-                  <Link to="/register" className="text-primary text-sm font-bold">
-                  Create an account
-                  </Link>
-                </div>
-                {/* link end */}
-            </>
-          );
-        }
+            {/* sign in with google end */}
+            {/* link start */}
+            <div className="flex justify-center mt-8">
+              <Link to="/register" className="text-primary text-sm font-bold">
+              Create an account
+              </Link>
+            </div>
+            {/* link end */}
+        </>
+      );
+    }
 
 export default FormSignIn;
