@@ -2,13 +2,33 @@ import React from 'react';
 import Button from "../Elements/Button";
 import LabeledInput from '../Elements/LabeledInput';
 import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-function FormSignUp() {
+function FormSignUp(props) {
+  const { onSubmit, isLoading } = props;
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Nama wajib diisi'),
+      email: Yup.string().email('Format email salah!').required('Email wajib diisi'),
+      password: Yup.string().required('Password wajib diisi'),
+    }),
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
+  });
+
   return (
     <>
       {/* form start */}
       <div className="mt-16">
-        <form action="">
+        <form onSubmit={formik.handleSubmit}>
           {/* Input Nama Lengkap */}
           <div className="mb-6">
             <LabeledInput 
@@ -17,7 +37,15 @@ function FormSignUp() {
               type="text"
               placeholder="Tanzir Rahman"
               name="name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
             />
+            {formik.touched.name && formik.errors.name && (
+              <div className="text-xs text-red-500 font-medium text-left mt-1">
+                {formik.errors.name}
+              </div>
+            )}
           </div>
 
           {/* Input Email */}
@@ -28,7 +56,15 @@ function FormSignUp() {
               type="email"
               placeholder="hello@example.com"
               name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
             />
+            {formik.touched.email && formik.errors.email && (
+              <div className="text-xs text-red-500 font-medium text-left mt-1">
+                {formik.errors.email}
+              </div>
+            )}
           </div>
 
           {/* Input Password */}
@@ -39,7 +75,15 @@ function FormSignUp() {
               type="password"
               placeholder="**************"
               name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             />
+            {formik.touched.password && formik.errors.password && (
+              <div className="text-xs text-red-500 font-medium text-left mt-1">
+                {formik.errors.password}
+              </div>
+            )}
           </div>
 
           {/* Teks Terms of Service */}
@@ -49,7 +93,9 @@ function FormSignUp() {
           </div>
 
           {/* Tombol Sign Up */}
-          <Button type="submit">Sign up</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Loading..." : "Sign up"}
+          </Button>
         </form>
       </div>
       {/* form end */}
@@ -67,7 +113,6 @@ function FormSignUp() {
            <svg
               className="h-6 w-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
-              xmlnXlink="http://www.w3.org/1999/xlink"
               width="800px"
               height="800px"
               viewBox="-0.5 0 48 48"
@@ -89,8 +134,8 @@ function FormSignUp() {
               d="M46.1454545,24 C46.1454545,22.6133333 45.9318182,21.12 45.6113636,19.7333333 L23.7136364,19.7333333 L23.7136364,28.8 L36.3181818,28.8 C35.6879545,31.8912 33.9724545,34.2677333 31.5177727,35.8144 L39.0249545,41.6181333 C43.3393409,37.6138667 46.1454545,31.6490667 46.1454545,24"
               fill="#4285F4"
             />
-          </svg>
-          Continue with Google
+           </svg>
+           Continue with Google
         </span>
       </Button>
       {/* sign up with google end */}
@@ -99,7 +144,7 @@ function FormSignUp() {
       <div className="flex justify-center mt-6 text-sm text-gray-01">
         Already have an account?{' '}
         <Link to="/login" className="text-primary font-bold">
-        Sign in here
+          Sign in here
         </Link>
       </div>
       {/* link end */}

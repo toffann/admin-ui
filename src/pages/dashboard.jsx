@@ -22,7 +22,7 @@ function dashboard() {
       setGoals({
         targetAmount: 2100,
         target_amount: 2100,
-        present_amount: 12500, // Menyuapi proporsi snake_case agar chart lingkaran CardGoal melengkung penuh
+        present_amount: 12500, 
       });
     } catch (err) {
       console.error("Gagal mengambil data goals:", err);
@@ -73,7 +73,6 @@ function dashboard() {
             <CardRecentTransaction data={transactions} />
           </div>
           <div className="sm:col-span-8">
-            {/* Merender kembali dengan normal, bersih, dan mengirim data statistics */}
             <CardStatistic data={expensesStatistics} />
           </div>
           <div className="sm:col-span-8">

@@ -31,11 +31,11 @@ html {
 }
 
 html.dark {
-  --color-special-mainBg: #18181b; /* zinc-900 (Warna background utama) */
-  --color-defaultBlack: #09090b;   /* zinc-950 (Warna sidebar hitam pekat) */
-  --color-gray-06: #27272a;        /* zinc-800 (Warna background Card) */
-  --color-gray-05: #27272a;        /* zinc-800 (Warna border Card) */
-  --color-secondary: #e4e4e7;      /* zinc-200 (Warna teks deskripsi) */
+  --color-special-mainBg: #18181b; 
+  --color-defaultBlack: #09090b;   
+  --color-gray-06: #27272a;        
+  --color-gray-05: #27272a;        
+  --color-secondary: #e4e4e7;      
 }
 
 .theme-green {

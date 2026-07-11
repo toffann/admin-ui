@@ -10,7 +10,6 @@ export function DarkModeContextProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("darkMode", isDarkMode);
-    // Ini bagian krusial untuk Tailwind v4: menempelkan class 'dark' pada document root
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
     } else {
