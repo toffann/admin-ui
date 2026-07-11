@@ -35,7 +35,7 @@ function FormSignUp(props) {
               label="Name"
               id="name"
               type="text"
-              placeholder="Your Namw"
+              placeholder="Your Name"
               name="name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
